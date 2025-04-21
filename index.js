@@ -51,8 +51,13 @@ app.get('/personas', (req, res) => {
   res.json(personas)
 });
 
-app.delete('/personas/:id', (req,res)=>{
-  const id=parseInt(req.params.id);
-  personas.splice(id,1)
-  res.json(personas)
-})
+app.delete('/personas/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  
+  if (personas==[] || id < 0 || id >= personas.length) {
+    return res.status(400).json({ error: "No se encontró la persona" });
+  }
+
+  personas.splice(id, 1);
+  res.json(personas);
+});
